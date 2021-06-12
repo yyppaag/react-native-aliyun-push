@@ -31,26 +31,26 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
 
     //公共依赖库
-    implementation 'com.aliyun.ams:alicloud-android-utdid:2.5.1-proguard'
-    implementation 'com.aliyun.ams:alicloud-android-utils:1.1.6.4'
-    implementation 'com.aliyun.ams:alicloud-android-ut:5.4.4'
-    implementation 'com.aliyun.ams:alicloud-android-beacon:1.0.4.3'
+    api 'com.aliyun.ams:alicloud-android-utdid:2.5.1-proguard'
+    api 'com.aliyun.ams:alicloud-android-utils:2.0.0'
+    api 'com.aliyun.ams:alicloud-android-ut:5.4.4'
+    api 'com.aliyun.ams:alicloud-android-beacon:1.0.7'
 
 
     // 主通道依赖
-    implementation 'com.aliyun.ams:alicloud-android-push:3.4.0'
-    // 辅助通道基础依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push:3.4.0'
-    // 华为依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-huawei:3.4.0'
-    // 小米依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.4.0'
-    // OPPO依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-oppo:3.4.0'
-    // vivo依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-vivo:3.4.0'
-    // 魅族依赖
-    implementation 'com.aliyun.ams:alicloud-android-third-push-meizu:3.4.0'
+    api 'com.aliyun.ams:alicloud-android-push:3.4.0' 
+    api 'com.aliyun.ams:alicloud-android-third-push:3.4.0'
+    //华为依赖
+    api 'com.aliyun.ams:alicloud-android-third-push-huawei:3.4.0'
+    //小米依赖
+    api 'com.aliyun.ams:alicloud-android-third-push-xiaomi:3.4.0'
+    //OPPO依赖
+    api 'com.aliyun.ams:alicloud-android-third-push-oppo:3.4.0'
+    //vivo依赖
+    api 'com.aliyun.ams:alicloud-android-third-push-vivo:3.4.0'
+    //魅族依赖
+    api 'com.aliyun.ams:alicloud-android-third-push-meizu:3.4.0'
+    //谷歌依赖
     // 谷歌依赖
     // implementation 'com.aliyun.ams:alicloud-android-third-push-fcm:3.4.0'
 

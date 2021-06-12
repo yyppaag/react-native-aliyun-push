@@ -282,4 +282,9 @@ public class AliyunPushModule extends ReactContextBaseJavaModule implements Life
     public void getInitialMessage(final Promise promise){
         promise.resolve(AliyunPushMessageReceiver.initialMessage);
     }
+
+    @ReactMethod
+    public void clearAllNotifications(){
+        PushServiceFactory.getCloudPushService().clearNotifications();
+    }
 }

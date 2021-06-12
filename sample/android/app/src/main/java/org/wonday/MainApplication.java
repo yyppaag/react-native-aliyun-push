@@ -1,7 +1,7 @@
 package org.wonday;
 
 import android.app.Application;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;

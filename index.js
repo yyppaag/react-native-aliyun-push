@@ -179,4 +179,8 @@ export default class AliyunPush {
         listeners[key] = null;
 
     };
+
+    static clearAllNotifications = () => {
+        return AliyunPushNative.clearAllNotifications();
+    }
 }
