@@ -17,7 +17,7 @@ import com.alibaba.sdk.android.push.AndroidPopupActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 public class ThirdPartMessageActivity extends AndroidPopupActivity {
-
+    static String TAG = "ThirdPartMessageActivity";
     public static Class<?> mainClass;
     public static ReactApplicationContext context;
 

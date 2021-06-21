@@ -39,18 +39,21 @@ import com.facebook.common.logging.FLog;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.CommonCallback;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import androidx.annotation.Nullable;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import org.wonday.aliyun.push.MIUIUtils;
 
 public class AliyunPushModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
-    private final ReactApplicationContext context;
+    private static ReactApplicationContext context;
     private int badgeNumber;
 
     public AliyunPushModule(ReactApplicationContext reactContext) {
 
         super(reactContext);
-        this.context = reactContext;
+        context = reactContext;
         this.badgeNumber = 0;
         AliyunPushMessageReceiver.context = reactContext;
         ThirdPartMessageActivity.context = reactContext;

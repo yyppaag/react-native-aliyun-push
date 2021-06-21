@@ -19,6 +19,9 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import androidx.annotation.Nullable;
 
 
 public class AliyunPushMessageReceiver extends MessageReceiver {
@@ -76,7 +79,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "opened");
 
-        AliyunPushModule.sendEvent("aliyunPushReceived", params);
+        sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -91,7 +94,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "opened");
 
-        AliyunPushModule.sendEvent("aliyunPushReceived", params);
+        sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -104,7 +107,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "removed");
 
-        AliyunPushModule.sendEvent("aliyunPushReceived", params);
+        sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -126,7 +129,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
 
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
 
-        AliyunPushModule.sendEvent("aliyunPushReceived", params);
+        sendEvent("aliyunPushReceived", params);
     }
 
 
@@ -143,7 +146,18 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
 
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
 
-        AliyunPushModule.sendEvent("aliyunPushReceived", params);;
+        sendEvent("aliyunPushReceived", params);;
+    }
+
+    private static void sendEvent(String eventName, @Nullable WritableMap params) {
+        if (context == null) {
+            params.putString("appState", "background");
+            AliyunPushMessageReceiver.initialMessage = params;
+            FLog.d(ReactConstants.TAG, "reactContext==null");
+        }else{
+            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit(eventName, params);
+        }
     }
 
     public static WritableMap initialMessage = null;
