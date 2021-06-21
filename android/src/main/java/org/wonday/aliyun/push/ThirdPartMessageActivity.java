@@ -8,11 +8,10 @@
 
 package org.wonday.aliyun.push;
 
-import java.util.Map;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.content.Context;
+import android.util.Log;
+import java.util.Map;
 
 import com.alibaba.sdk.android.push.AndroidPopupActivity;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -35,15 +34,24 @@ public class ThirdPartMessageActivity extends AndroidPopupActivity {
      */
     @Override
     protected void onSysNoticeOpened(String title, String summary, Map<String, String> extMap) {
+        Log.d(TAG, "onSysNoticeOpened title: " + title + " summary: " + summary + " extMap: " + extMap);
+
         if (AliyunPushMessageReceiver.instance!=null) {
+            Log.d(TAG, "AliyunPushMessageReceiver instance is ok");
             AliyunPushMessageReceiver.instance.onNotification(context, title, summary, extMap);
 
-            if (ThirdPartMessageActivity.mainClass!=null) {
-                Intent itent=new Intent();
-                itent.setClass(ThirdPartMessageActivity.this, mainClass);
-                startActivity(itent);
-                ThirdPartMessageActivity.this.finish();
-            }
+        } else {
+            Log.d(TAG, "AliyunPushMessageReceiver instance is null");
+        }
+
+        if (ThirdPartMessageActivity.mainClass!=null) {
+            Log.d(TAG, "ThirdPartMessageActivity mainClass is ok");
+            Intent itent= new Intent();
+            itent.setClass(ThirdPartMessageActivity.this, mainClass);
+            startActivity(itent);
+            ThirdPartMessageActivity.this.finish();
+        } else {
+            Log.d(TAG, "ThirdPartMessageActivity mainClass is null");
         }
     }
 }

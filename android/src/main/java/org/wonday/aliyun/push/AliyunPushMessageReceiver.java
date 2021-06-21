@@ -8,44 +8,25 @@
 
 package org.wonday.aliyun.push;
 
-import android.content.Context;
 import android.util.Log;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
-import javax.annotation.Nullable;
 
-import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.JavaScriptModule;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.LifecycleEventListener;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+import android.content.Context;
+import com.alibaba.sdk.android.push.MessageReceiver;
+import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.facebook.common.logging.FLog;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 
-import com.alibaba.sdk.android.push.CloudPushService;
-import com.alibaba.sdk.android.push.MessageReceiver;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.alibaba.sdk.android.push.notification.CPushMessage;
 
 public class AliyunPushMessageReceiver extends MessageReceiver {
     public static ReactApplicationContext context;
     public static AliyunPushMessageReceiver instance;
 
-    private final String ALIYUN_PUSH_TYPE_MESSAGE = "message";
-    private final String ALIYUN_PUSH_TYPE_NOTIFICATION = "notification";
+    private static String ALIYUN_PUSH_TYPE_MESSAGE = "message";
+    private static String ALIYUN_PUSH_TYPE_NOTIFICATION = "notification";
 
     public AliyunPushMessageReceiver() {
         super();
@@ -95,7 +76,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "opened");
 
-        sendEvent("aliyunPushReceived", params);
+        AliyunPushModule.sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -110,7 +91,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "opened");
 
-        sendEvent("aliyunPushReceived", params);
+        AliyunPushModule.sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -123,7 +104,7 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
         params.putString("actionIdentifier", "removed");
 
-        sendEvent("aliyunPushReceived", params);
+        AliyunPushModule.sendEvent("aliyunPushReceived", params);
     }
 
     @Override
@@ -145,19 +126,26 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
 
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
 
-        sendEvent("aliyunPushReceived", params);
+        AliyunPushModule.sendEvent("aliyunPushReceived", params);
     }
 
-    private void sendEvent(String eventName, @Nullable WritableMap params) {
-        if (context == null) {
-            params.putString("appState", "background");
-            initialMessage = params;
-            FLog.d(ReactConstants.TAG, "reactContext==null");
-        }else{
-            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
+
+    public static void buildNotificationParams(String title, String content, Map<String, String> extraMap) {
+        WritableMap params = Arguments.createMap();
+        params.putString("body", content);
+        params.putString("title", title);
+
+        WritableMap extraWritableMap = Arguments.createMap();
+        for (Map.Entry<String, String> entry : extraMap.entrySet()) {
+            extraWritableMap.putString(entry.getKey(),entry.getValue());
         }
+        params.putMap("extras", extraWritableMap);
+
+        params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
+
+        AliyunPushModule.sendEvent("aliyunPushReceived", params);;
     }
+
     public static WritableMap initialMessage = null;
 
 }

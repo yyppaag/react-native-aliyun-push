@@ -16,8 +16,9 @@
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </receiver>
-        <activity
+        <!-- uncomment below -->
+        <!--   <activity
                 android:name=".ThirdPartMessageActivity"
-                android:exported="true" />
+                android:exported="true" /> -->
     </application>
 </manifest>
