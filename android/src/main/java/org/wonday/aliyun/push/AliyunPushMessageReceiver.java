@@ -134,6 +134,10 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
 
 
     public static void buildNotificationParams(String title, String content, Map<String, String> extraMap) {
+        buildNotificationParams(title, content, extraMap, false);
+    }
+
+    public static void buildNotificationParams(String title, String content, Map<String, String> extraMap, Boolean isFromOffline) {
         WritableMap params = Arguments.createMap();
         params.putString("body", content);
         params.putString("title", title);
@@ -145,6 +149,9 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         params.putMap("extras", extraWritableMap);
 
         params.putString("type", ALIYUN_PUSH_TYPE_NOTIFICATION);
+        if (isFromOffline) {
+            params.putString("actionIdentifier", "offline");
+        }
 
         sendEvent("aliyunPushReceived", params);;
     }
