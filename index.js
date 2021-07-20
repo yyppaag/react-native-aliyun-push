@@ -43,6 +43,10 @@ export default class AliyunPush {
         return AliyunPushNative.getDeviceId();
     }
 
+    static checkOfflineEvent = () => {
+        return AliyunPushNative.checkOfflineEvent();
+    }
+    
     static getInitialMessage = () => {
         return AliyunPushNative.getInitialMessage().then(e => {
             if(e && e.extraStr) {

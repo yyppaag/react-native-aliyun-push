@@ -132,6 +132,15 @@ public class AliyunPushMessageReceiver extends MessageReceiver {
         sendEvent("aliyunPushReceived", params);
     }
 
+    public static void sendOfflineEvent() {
+        if (AliyunPushMessageReceiver.initialMessage != null) {
+            String actionIdentifier = AliyunPushMessageReceiver.initialMessage.getString("actionIdentifier");
+            if (actionIdentifier != null && "offline".equalsIgnoreCase(actionIdentifier)){
+                sendEvent("aliyunPushReceived", AliyunPushMessageReceiver.initialMessage);
+                AliyunPushMessageReceiver.initialMessage = null;
+            }
+        }
+    }
 
     public static void buildNotificationParams(String title, String content, Map<String, String> extraMap) {
         buildNotificationParams(title, content, extraMap, false);

@@ -282,6 +282,11 @@ public class AliyunPushModule extends ReactContextBaseJavaModule implements Life
     }
 
     @ReactMethod
+    public void checkOfflineEvent() {
+        AliyunPushMessageReceiver.sendOfflineEvent();
+    }
+
+    @ReactMethod
     public void getInitialMessage(final Promise promise){
         promise.resolve(AliyunPushMessageReceiver.initialMessage);
     }
